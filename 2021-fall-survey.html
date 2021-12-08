@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Fall 2021 Survey</title>
+
+<script src="2021-fall-survey_files/header-attrs-2.11/header-attrs.js"></script>
+<script src="2021-fall-survey_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="2021-fall-survey_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="2021-fall-survey_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="2021-fall-survey_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="2021-fall-survey_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="2021-fall-survey_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="2021-fall-survey_files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="2021-fall-survey_files/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="2021-fall-survey_files/navigation-1.1/tabsets.js"></script>
+<script src="2021-fall-survey_files/navigation-1.1/codefolding.js"></script>
+<link href="2021-fall-survey_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="2021-fall-survey_files/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Fall 2021 Survey</h1>
+<h3 class="subtitle">Nittany Amateur Radio Club</h3>
+
+</div>
+
+
+<div id="purpose" class="section level1">
+<h1>Purpose</h1>
+<p>This document imports, cleans, and summarizes data from the Fall 2021 NARC member survey.</p>
+</div>
+<div id="outline" class="section level1">
+<h1>Outline</h1>
+<ol style="list-style-type: decimal">
+<li>Import the data from Google.</li>
+<li>Clean and reformat.</li>
+<li>Visualize.</li>
+</ol>
+</div>
+<div id="set-up" class="section level1">
+<h1>Set-up</h1>
+<pre class="r"><code>knitr::opts_chunk$set(
+  echo = FALSE,
+  fig.path = &quot;img/&quot;,
+  dev = &quot;png&quot;,
+  dpi = 300,
+  fig.align = &quot;center&quot;,
+  fig.width = 7,
+  fig.height = 3
+)</code></pre>
+<div id="install-required-packages" class="section level2">
+<h2>Install required packages</h2>
+</div>
+<div id="authenticate-to-google" class="section level2">
+<h2>Authenticate to Google</h2>
+<p>Since the survey data are in a Google sheet, we need to authenticate to Google to retrieve them. The following code chunk should <em>not</em> be run interactively.</p>
+</div>
+</div>
+<div id="import-clean" class="section level1">
+<h1>Import &amp; Clean</h1>
+<p>The earlier step downloaded the data to <code>csv/narc-fall-2021-survey.csv</code>.</p>
+<pre><code>## Rows: 33 Columns: 40</code></pre>
+<pre><code>## ── Column specification ──────────────────────
+## Delimiter: &quot;,&quot;
+## chr (40): Timestamp, Please describe your ...</code></pre>
+<pre><code>## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<p>We’ll rename some of the variables to make them easier to deal with.</p>
+</div>
+<div id="visualize" class="section level1">
+<h1>Visualize</h1>
+<p>Rick is experimenting with the <code>likert</code> package. Here is a reference:</p>
+<p><a href="https://jakec007.github.io/2021-06-23-R-likert/" class="uri">https://jakec007.github.io/2021-06-23-R-likert/</a></p>
+<div id="packet" class="section level2">
+<h2>Packet</h2>
+<p><img src="img/packet_exp-1.png" width="2100" style="display: block; margin: auto;" /></p>
+<p><img src="img/packet_int-1.png" width="2100" style="display: block; margin: auto;" /></p>
+</div>
+<div id="aprs" class="section level2">
+<h2>APRS</h2>
+<p><img src="img/aprs_exp-1.png" width="2100" style="display: block; margin: auto;" /></p>
+<p><img src="img/aprs_int-1.png" width="2100" style="display: block; margin: auto;" /></p>
+</div>
+<div id="winlink" class="section level2">
+<h2>Winlink</h2>
+<p><img src="img/winlink_exp-1.png" width="2100" style="display: block; margin: auto;" /></p>
+<p><img src="img/winlink_int-1.png" width="2100" style="display: block; margin: auto;" /></p>
+</div>
+<div id="fldigi" class="section level2">
+<h2>fldigi</h2>
+<p><img src="img/fldigi_exp-1.png" width="2100" style="display: block; margin: auto;" /></p>
+<p><img src="img/fldigi_int-1.png" width="2100" style="display: block; margin: auto;" /></p>
+</div>
+<div id="ft8" class="section level2">
+<h2>FT8</h2>
+<p><img src="img/ft8_exp-1.png" width="2100" style="display: block; margin: auto;" /></p>
+<p><img src="img/ft8_int-1.png" width="2100" style="display: block; margin: auto;" /></p>
+</div>
+<div id="atv" class="section level2">
+<h2>ATV</h2>
+<p><img src="img/atv_exp-1.png" width="2100" style="display: block; margin: auto;" /></p>
+<p><img src="img/atv_int-1.png" width="2100" style="display: block; margin: auto;" /></p>
+</div>
+<div id="aredn" class="section level2">
+<h2>AREDN</h2>
+<p><img src="img/aredn_exp-1.png" width="2100" style="display: block; margin: auto;" /></p>
+<p><img src="img/aredn_int-1.png" width="2100" style="display: block; margin: auto;" /></p>
+</div>
+<div id="cw" class="section level2">
+<h2>CW</h2>
+<p><img src="img/cw_exp-1.png" width="2100" style="display: block; margin: auto;" /></p>
+<p><img src="img/cw_int-1.png" width="2100" style="display: block; margin: auto;" /></p>
+</div>
+<div id="digital-voice" class="section level2">
+<h2>Digital voice</h2>
+<p><img src="img/digital_voice_exp-1.png" width="2100" style="display: block; margin: auto;" /></p>
+<p><img src="img/digital_voice_int-1.png" width="2100" style="display: block; margin: auto;" /></p>
+</div>
+<div id="contesting" class="section level2">
+<h2>Contesting</h2>
+<p><img src="img/contesting_exp-1.png" width="2100" style="display: block; margin: auto;" /></p>
+<p><img src="img/contesting_int-1.png" width="2100" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="interpret" class="section level1">
+<h1>Interpret</h1>
+<p>The largest percentage of respondents who have modest to high levels of interest were found for the following activities:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Activity</th>
+<th align="center">Interested or Very Interested</th>
+<th align="center">Occasional or regular experience</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>APRS</td>
+<td align="center">61%</td>
+<td align="center">31%</td>
+</tr>
+<tr class="even">
+<td>FT8</td>
+<td align="center">57%</td>
+<td align="center">29%</td>
+</tr>
+<tr class="odd">
+<td>fldigi</td>
+<td align="center">53%</td>
+<td align="center">25%</td>
+</tr>
+<tr class="even">
+<td>Digital voice</td>
+<td align="center">48%</td>
+<td align="center">26%</td>
+</tr>
+<tr class="odd">
+<td>CW</td>
+<td align="center">38%</td>
+<td align="center">27%</td>
+</tr>
+<tr class="even">
+<td>Winlink</td>
+<td align="center">33%</td>
+<td align="center">12%</td>
+</tr>
+<tr class="odd">
+<td>Contesting</td>
+<td align="center">28%</td>
+<td align="center">28%</td>
+</tr>
+<tr class="even">
+<td>Packet</td>
+<td align="center">26%</td>
+<td align="center">15%</td>
+</tr>
+<tr class="odd">
+<td>ATV</td>
+<td align="center">23%</td>
+<td align="center">6%</td>
+</tr>
+<tr class="even">
+<td>AREDN</td>
+<td align="center">20%</td>
+<td align="center">0%</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,528 @@
+---
+title: "Fall 2021 Survey"
+subtitle: "Nittany Amateur Radio Club"
+output: 
+  html_document:
+    self_contained: false
+    code_folding: hide
+    toc: true
+    toc_depth: 3
+    toc_float: true
+---
+
+# Purpose
+
+This document imports, cleans, and summarizes data from the Fall 2021 NARC member survey.
+
+# Outline
+
+1. Import the data from Google.
+2. Clean and reformat.
+3. Visualize.
+
+# Set-up
+
+```{r}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  fig.path = "img/",
+  dev = "png",
+  dpi = 300,
+  fig.align = "center",
+  fig.width = 7,
+  fig.height = 3
+)
+```
+
+## Install required packages
+
+```{r}
+if (!require(tidyverse)) {
+  install.packages('tidyverse')
+  library(tidyverse) # for pipe `%>%`
+}
+
+if (!require(googledrive)) {
+  install.packages('googledrive')
+}
+```
+
+## Authenticate to Google
+
+Since the survey data are in a Google sheet, we need to authenticate to Google to retrieve them. The following code chunk should *not* be run interactively.
+
+```{r, eval = FALSE}
+# The survey results are in a file called `NARC Fall 2021 Member Survey (Responses)`.
+googledrive::drive_download(file = 'NARC Fall 2021 Member Survey (Responses)', path = 'csv/narc-fall-2021-survey', type = 'csv', overwrite = TRUE)
+```
+
+# Import & Clean
+
+The earlier step downloaded the data to `csv/narc-fall-2021-survey.csv`.
+
+```{r}
+narc_fall_2021 <- readr::read_csv("csv/narc-fall-2021-survey.csv")
+```
+
+We'll rename some of the variables to make them easier to deal with.
+
+```{r}
+narc_fall_2021_vhf <- narc_fall_2021 %>%
+  dplyr::rename(., packet_exp = 'Please describe your level of experience with the following VHF/UHF digital modes. [VHF packet]',
+                aprs_exp = "Please describe your level of experience with the following VHF/UHF digital modes. [APRS]",
+                winlink_exp = "Please describe your level of experience with the following VHF/UHF digital modes. [Winlink]",
+                fldigi_exp = "Please describe your level of experience with the following VHF/UHF digital modes. [Fldigi]",
+                ft8_exp = "Please describe your level of experience with the following VHF/UHF digital modes. [FT8 and related modes]",
+                packet_interest = "Describe your level of interest in the following VHF/UHF digital modes. [VHF packet]",
+                aprs_interest = "Describe your level of interest in the following VHF/UHF digital modes. [APRS]",
+                winlink_interest = "Describe your level of interest in the following VHF/UHF digital modes. [Winlink]",
+                fldigi_interest = "Describe your level of interest in the following VHF/UHF digital modes. [Fldigi]",
+                ft8_interest = "Describe your level of interest in the following VHF/UHF digital modes. [FT8 and related modes]",
+                atv_exp = "Describe your level of experience with the following VHF/UHF operations. [Amateur TV]",
+                aredn_exp = "Describe your level of experience with the following VHF/UHF operations. [AREDN  (& related networking)]",
+                digital_voice_exp = "Describe your level of experience with the following VHF/UHF operations. [FM digital voice (e.g. Allstar, DMR, D-STAR)]",
+                cw_exp = "Describe your level of experience with the following VHF/UHF operations. [CW]",
+                contesting_exp = "Describe your level of experience with the following VHF/UHF operations. [Contesting]",
+                satellite_interest = "Describe your level of interest in the following VHF/UHF operations. [Satellite]",
+                atv_interest = "Describe your level of interest in the following VHF/UHF operations. [Amateur TV]",
+                aredn_interest = "Describe your level of interest in the following VHF/UHF operations. [AREDN (& related networking)]",
+                digital_voice_interest = "Describe your level of interest in the following VHF/UHF operations. [FM digital voice (e.g., Allstar, DMR, D-STAR)]",
+                cw_interest = "Describe your level of interest in the following VHF/UHF operations. [CW]",
+                contesting_interest = "Describe your level of interest in the following VHF/UHF operations. [Contesting]",
+                satellite_exp = "Describe your level of experience with the following VHF/UHF operations. [Satellite]",
+                follow_up = "The survey is anonymous unless you want to identify yourself. If you identify yourself, we may want to follow up with you. So, if you want to be contacted for follow-up, please give us your name, callsign, and the best way to reach you (email/phone)."
+                ) %>%
+  dplyr::select(., packet_exp, packet_interest,
+                aprs_exp, aprs_interest,
+                winlink_exp, winlink_interest,
+                ft8_exp, ft8_interest,
+                fldigi_exp, fldigi_interest,
+                atv_exp, atv_interest,
+                cw_exp, cw_interest,
+                contesting_exp, contesting_interest,
+                aredn_exp, aredn_interest,
+                satellite_exp, satellite_interest,
+                digital_voice_exp, digital_voice_interest)
+```
+
+# Visualize
+
+Rick is experimenting with the `likert` package. Here is a reference:
+
+https://jakec007.github.io/2021-06-23-R-likert/
+
+## Packet
+
+```{r}
+packet <- narc_fall_2021_vhf %>%
+  dplyr::select(., packet_exp, packet_interest) %>%
+  dplyr::mutate(., packet_exp = factor(packet_exp, 
+                                       levels = c("Never tried", "Tried 1-2 times", "Use rarely", "Use occasionally", "Use regularly")),
+                packet_interest = factor(packet_interest,
+                                         levels = c("Not interested", "Potentially interested", "Interested", "Very interested"))) %>%
+  dplyr::rename("Experience with packet" = packet_exp,
+                "Interest in packet" = packet_interest)
+
+packet <- data.frame(packet)
+```
+
+```{r packet_exp}
+plot(likert::likert(packet[, 1, drop = FALSE]), legend.position = "right")
+```
+
+```{r packet_int}
+plot(likert::likert(packet[, 2, drop = FALSE]), legend.position = "right")
+```
+
+## APRS
+
+```{r}
+aprs <- narc_fall_2021_vhf %>%
+  dplyr::select(., aprs_exp, aprs_interest) %>%
+  dplyr::mutate(
+    .,
+    aprs_exp = factor(
+      aprs_exp,
+      levels = c(
+        "Never tried",
+        "Tried 1-2 times",
+        "Use rarely",
+        "Use occasionally",
+        "Use regularly"
+      )
+    ),
+    aprs_interest = factor(
+      aprs_interest,
+      levels = c(
+        "Not interested",
+        "Potentially interested",
+        "Interested",
+        "Very interested"
+      )
+    )
+  ) %>%
+  dplyr::rename("Experience with APRS" = aprs_exp,
+                "Interest in APRS" = aprs_interest)
+
+aprs <- data.frame(aprs)
+```
+
+```{r aprs_exp}
+plot(likert::likert(aprs[, 1, drop = FALSE]), legend.position = "right")
+```
+
+```{r aprs_int}
+plot(likert::likert(aprs[, 2, drop = FALSE]), legend.position = "right")
+```
+
+## Winlink
+
+```{r}
+winlink <- narc_fall_2021_vhf %>%
+  dplyr::select(., winlink_exp, winlink_interest) %>%
+  dplyr::mutate(
+    .,
+    winlink_exp = factor(
+      winlink_exp,
+      levels = c(
+        "Never tried",
+        "Tried 1-2 times",
+        "Use rarely",
+        "Use occasionally",
+        "Use regularly"
+      )
+    ),
+    winlink_interest = factor(
+      winlink_interest,
+      levels = c(
+        "Not interested",
+        "Potentially interested",
+        "Interested",
+        "Very interested"
+      )
+    )
+  ) %>%
+  dplyr::rename("Experience with Winlink" = winlink_exp,
+                "Interest in Winlink" = winlink_interest)
+
+winlink <- data.frame(winlink)
+```
+
+```{r winlink_exp}
+plot(likert::likert(winlink[, 1, drop = FALSE]), legend.position = "right")
+```
+
+```{r winlink_int}
+plot(likert::likert(winlink[, 2, drop = FALSE]), legend.position = "right")
+```
+
+## fldigi
+
+```{r}
+fldigi <- narc_fall_2021_vhf %>%
+  dplyr::select(., fldigi_exp, fldigi_interest) %>%
+  dplyr::mutate(
+    .,
+    fldigi_exp = factor(
+      fldigi_exp,
+      levels = c(
+        "Never tried",
+        "Tried 1-2 times",
+        "Use rarely",
+        "Use occasionally",
+        "Use regularly"
+      )
+    ),
+    fldigi_interest = factor(
+      fldigi_interest,
+      levels = c(
+        "Not interested",
+        "Potentially interested",
+        "Interested",
+        "Very interested"
+      )
+    )
+  ) %>%
+  dplyr::rename("Experience with fldigi" = fldigi_exp,
+                "Interest in fldigi" = fldigi_interest)
+
+fldigi <- data.frame(fldigi)
+
+```
+
+```{r fldigi_exp}
+plot(likert::likert(fldigi[, 1, drop = FALSE]), legend.position = "right")
+```
+
+```{r fldigi_int}
+plot(likert::likert(fldigi[, 2, drop = FALSE]), legend.position = "right")
+```
+
+## FT8
+
+```{r}
+ft8 <- narc_fall_2021_vhf %>%
+  dplyr::select(., ft8_exp, ft8_interest) %>%
+  dplyr::mutate(
+    .,
+    ft8_exp = factor(
+      ft8_exp,
+      levels = c(
+        "Never tried",
+        "Tried 1-2 times",
+        "Use rarely",
+        "Use occasionally",
+        "Use regularly"
+      )
+    ),
+    ft8_interest = factor(
+      ft8_interest,
+      levels = c(
+        "Not interested",
+        "Potentially interested",
+        "Interested",
+        "Very interested"
+      )
+    )
+  ) %>%
+  dplyr::rename("Experience with FT8" = ft8_exp,
+                "Interest in FT8" = ft8_interest)
+
+ft8 <- data.frame(ft8)
+```
+
+
+```{r ft8_exp}
+plot(likert::likert(ft8[, 1, drop = FALSE]), legend.position = "right")
+```
+
+```{r ft8_int}
+plot(likert::likert(ft8[, 2, drop = FALSE]), legend.position = "right")
+```
+
+## ATV
+
+```{r}
+atv <- narc_fall_2021_vhf %>%
+  dplyr::select(., atv_exp, atv_interest) %>%
+  dplyr::mutate(
+    .,
+    atv_exp = factor(
+      atv_exp,
+      levels = c(
+        "Never tried",
+        "Tried 1-2 times",
+        "Use rarely",
+        "Use occasionally",
+        "Use regularly"
+      )
+    ),
+    atv_interest = factor(
+      atv_interest,
+      levels = c(
+        "Not interested",
+        "Potentially interested",
+        "Interested",
+        "Very interested"
+      )
+    )
+  ) %>%
+  dplyr::rename("Experience with ATV" = atv_exp,
+                "Interest in ATV" = atv_interest)
+
+atv <- data.frame(atv)
+```
+
+
+```{r atv_exp}
+plot(likert::likert(atv[, 1, drop = FALSE]), legend.position = "right")
+```
+
+```{r atv_int}
+plot(likert::likert(atv[, 2, drop = FALSE]), legend.position = "right")
+```
+
+## AREDN
+
+```{r}
+aredn <- narc_fall_2021_vhf %>%
+  dplyr::select(., aredn_exp, aredn_interest) %>%
+  dplyr::mutate(
+    .,
+    aredn_exp = factor(
+      aredn_exp,
+      levels = c(
+        "Never tried",
+        "Tried 1-2 times",
+        "Use rarely",
+        "Use occasionally",
+        "Use regularly"
+      )
+    ),
+    aredn_interest = factor(
+      aredn_interest,
+      levels = c(
+        "Not interested",
+        "Potentially interested",
+        "Interested",
+        "Very interested"
+      )
+    )
+  ) %>%
+  dplyr::rename("Experience with AREDN" = aredn_exp,
+                "Interest in AREDN" = aredn_interest)
+
+aredn <- data.frame(aredn)
+```
+
+```{r aredn_exp}
+plot(likert::likert(aredn[, 1, drop = FALSE]), legend.position = "right")
+```
+
+
+```{r aredn_int}
+plot(likert::likert(aredn[, 2, drop = FALSE]), legend.position = "right")
+```
+
+## CW
+
+```{r}
+cw <- narc_fall_2021_vhf %>%
+  dplyr::select(., cw_exp, cw_interest) %>%
+  dplyr::mutate(
+    .,
+    cw_exp = factor(
+      cw_exp,
+      levels = c(
+        "Never tried",
+        "Tried 1-2 times",
+        "Use rarely",
+        "Use occasionally",
+        "Use regularly"
+      )
+    ),
+    cw_interest = factor(
+      cw_interest,
+      levels = c(
+        "Not interested",
+        "Potentially interested",
+        "Interested",
+        "Very interested"
+      )
+    )
+  ) %>%
+  dplyr::rename("Experience with CW" = cw_exp,
+                "Interest in CW" = cw_interest)
+
+cw <- data.frame(cw)
+
+```
+
+```{r cw_exp}
+plot(likert::likert(cw[, 1, drop = FALSE]), legend.position = "right")
+```
+
+```{r cw_int}
+plot(likert::likert(cw[, 2, drop = FALSE]), legend.position = "right")
+```
+
+## Digital voice
+
+```{r}
+digital_voice <- narc_fall_2021_vhf %>%
+  dplyr::select(., digital_voice_exp, digital_voice_interest) %>%
+  dplyr::mutate(
+    .,
+    digital_voice_exp = factor(
+      digital_voice_exp,
+      levels = c(
+        "Never tried",
+        "Tried 1-2 times",
+        "Use rarely",
+        "Use occasionally",
+        "Use regularly"
+      )
+    ),
+    digital_voice_interest = factor(
+      digital_voice_interest,
+      levels = c(
+        "Not interested",
+        "Potentially interested",
+        "Interested",
+        "Very interested"
+      )
+    )
+  ) %>%
+  dplyr::rename("Experience with digital voice" = digital_voice_exp,
+                "Interest in digital voice" = digital_voice_interest)
+
+digital_voice <- data.frame(digital_voice)
+```
+
+```{r digital_voice_exp}
+plot(likert::likert(digital_voice[, 1, drop = FALSE]), legend.position = "right")
+```
+
+```{r digital_voice_int}
+plot(likert::likert(digital_voice[, 2, drop = FALSE]), legend.position = "right")
+```
+
+## Contesting
+
+```{r}
+contesting <- narc_fall_2021_vhf %>%
+  dplyr::select(., contesting_exp, contesting_interest) %>%
+  dplyr::mutate(
+    .,
+    contesting_exp = factor(
+      contesting_exp,
+      levels = c(
+        "Never tried",
+        "Tried 1-2 times",
+        "Use rarely",
+        "Use occasionally",
+        "Use regularly"
+      )
+    ),
+    contesting_interest = factor(
+      contesting_interest,
+      levels = c(
+        "Not interested",
+        "Potentially interested",
+        "Interested",
+        "Very interested"
+      )
+    )
+  ) %>%
+  dplyr::rename("Experience with contesting" = contesting_exp,
+                "Interest in contesting" = contesting_interest)
+
+contesting <- data.frame(contesting)
+```
+
+```{r contesting_exp}
+plot(likert::likert(contesting[, 1, drop = FALSE]), legend.position = "right")
+```
+
+```{r contesting_int}
+plot(likert::likert(contesting[, 2, drop = FALSE]), legend.position = "right")
+```
+
+# Interpret
+
+The largest percentage of respondents who have modest to high levels of interest were found for the following activities:
+
+| Activity | Interested or Very Interested         | Occasional or regular experience |
+|----------|:---------------------------------------:|:-----------------------------------------------:|
+| APRS    | 61\%                                   | 31\% |
+| FT8      | 57\%                                  | 29\% |
+| fldigi  | 53\%                                   | 25\% |
+| Digital voice | 48\%                             | 26\% |
+| CW            | 38\%                             | 27\% |
+| Winlink       | 33\%                             | 12\% |
+| Contesting    | 28\%                             | 28\% |
+| Packet        | 26\%                             | 15\% |
+| ATV           | 23\%                             | 6\% |
+| AREDN         | 20\%                             | 0\% |
+
+
