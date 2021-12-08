@@ -63,7 +63,6 @@ The earlier step downloaded the data to `csv/narc-fall-2021-survey.csv`.
 ```{r}
 narc_fall_2021 <- readr::read_csv("csv/narc-fall-2021-survey.csv")
 ```
-
 We'll rename some of the variables to make them easier to deal with.
 
 ```{r}
@@ -105,7 +104,21 @@ narc_fall_2021_vhf <- narc_fall_2021 %>%
                 digital_voice_exp, digital_voice_interest)
 ```
 
-# Visualize
+## Mountaintop station activities
+
+```{r}
+narc_fall_2021_mtn <- narc_fall_2021 %>%
+  dplyr::rename(., have_keys = "Do you have keys to the mountaintop station?",
+                last_visit = "When was the last time you visited the station?",
+                participated_in = "If you have visited in the last 3 years, what activities did you participate in?",
+                didnt_visit_because = "If you have _not_ visited the station, why not?",
+                would_participate_in = "If the club offered the following activities at the mountaintop, which would you participate in?",
+                other_thoughts = "Any other thoughts on how the mountaintop station fits into your plans for ham radio now or in the near future?") %>%
+  dplyr::select(., have_keys, last_visit, participated_in, didnt_visit_because, would_participate_in,
+                other_thoughts)
+```
+
+# Visualize results for modes/operating
 
 Rick is experimenting with the `likert` package. Here is a reference:
 
@@ -508,6 +521,101 @@ plot(likert::likert(contesting[, 1, drop = FALSE]), legend.position = "right")
 plot(likert::likert(contesting[, 2, drop = FALSE]), legend.position = "right")
 ```
 
+## Satellite
+
+```{r}
+satellite <- narc_fall_2021_vhf %>%
+  dplyr::select(., satellite_exp, satellite_interest) %>%
+  dplyr::mutate(
+    .,
+    satellite_exp = factor(
+      satellite_exp,
+      levels = c(
+        "Never tried",
+        "Tried 1-2 times",
+        "Use rarely",
+        "Use occasionally",
+        "Use regularly"
+      )
+    ),
+    satellite_interest = factor(
+      satellite_interest,
+      levels = c(
+        "Not interested",
+        "Potentially interested",
+        "Interested",
+        "Very interested"
+      )
+    )
+  ) %>%
+  dplyr::rename("Experience with satellite ops" = satellite_exp,
+                "Interest in satellite ops" = satellite_interest)
+
+satellite <- data.frame(satellite)
+```
+
+```{r satellite_exp}
+plot(likert::likert(satellite[, 1, drop = FALSE]), legend.position = "right")
+```
+
+```{r satellite_int}
+plot(likert::likert(satellite[, 2, drop = FALSE]), legend.position = "right")
+```
+
+# Visualize results for mountaintop use
+
+## Have keys
+
+```{r}
+have_keys_df <- narc_fall_2021_mtn %>%
+  dplyr::select(., have_keys) %>%
+  dplyr::mutate(
+    .,
+    have_keys = factor(
+      have_keys,
+      levels = c(
+        "No",
+        "Not sure",
+        "Yes"
+      )
+    )) %>%
+  dplyr::rename("Have station keys?" = have_keys)
+
+have_keys_df <- data.frame(have_keys_df)
+```
+
+```{r have_keys}
+plot(likert::likert(have_keys_df[, 1, drop = FALSE]), legend.position = "right")
+```
+
+## Last visit
+
+```{r}
+last_visit_df <- narc_fall_2021_mtn %>%
+  dplyr::select(., last_visit) %>%
+  dplyr::mutate(
+    .,
+    last_visit = factor(
+      last_visit,
+      levels = c(
+        "Never visited",
+        "Can't recall",
+        "Sometime in 2019 or 2018",
+        "Last Fall/Summer/Spring (2020)",
+        "(Recently) Spring/Summer/Fall 2021"
+      )
+    )) %>%
+  dplyr::rename("Last visit to the station" = last_visit)
+
+last_visit_df <- data.frame(last_visit_df)
+```
+
+```{r last_station_visit}
+plot(likert::likert(last_visit_df[, 1, drop = FALSE]), legend.position = "right")
+```
+
+Parsing `participated_in` and `would_participate_in` is going to take some work.
+
 # Interpret
 
 The largest percentage of respondents who have modest to high levels of interest were found for the following activities:
@@ -520,9 +628,10 @@ The largest percentage of respondents who have modest to high levels of interest
 | Digital voice | 48\%                             | 26\% |
 | CW            | 38\%                             | 27\% |
 | Winlink       | 33\%                             | 12\% |
+| Satellite     | 32\%                             | 5\% |
 | Contesting    | 28\%                             | 28\% |
 | Packet        | 26\%                             | 15\% |
 | ATV           | 23\%                             | 6\% |
 | AREDN         | 20\%                             | 0\% |
 
-
+More than half of respondents have keys and have visited in the last two years.

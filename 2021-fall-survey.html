@@ -271,15 +271,6 @@ div.tocify {
 </div>
 <div id="set-up" class="section level1">
 <h1>Set-up</h1>
-<pre class="r"><code>knitr::opts_chunk$set(
-  echo = FALSE,
-  fig.path = &quot;img/&quot;,
-  dev = &quot;png&quot;,
-  dpi = 300,
-  fig.align = &quot;center&quot;,
-  fig.width = 7,
-  fig.height = 3
-)</code></pre>
 <div id="install-required-packages" class="section level2">
 <h2>Install required packages</h2>
 </div>
@@ -299,9 +290,12 @@ div.tocify {
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <p>We’ll rename some of the variables to make them easier to deal with.</p>
+<div id="mountaintop-station-activities" class="section level2">
+<h2>Mountaintop station activities</h2>
 </div>
-<div id="visualize" class="section level1">
-<h1>Visualize</h1>
+</div>
+<div id="visualize-results-for-modesoperating" class="section level1">
+<h1>Visualize results for modes/operating</h1>
 <p>Rick is experimenting with the <code>likert</code> package. Here is a reference:</p>
 <p><a href="https://jakec007.github.io/2021-06-23-R-likert/" class="uri">https://jakec007.github.io/2021-06-23-R-likert/</a></p>
 <div id="packet" class="section level2">
@@ -354,6 +348,23 @@ div.tocify {
 <p><img src="img/contesting_exp-1.png" width="2100" style="display: block; margin: auto;" /></p>
 <p><img src="img/contesting_int-1.png" width="2100" style="display: block; margin: auto;" /></p>
 </div>
+<div id="satellite" class="section level2">
+<h2>Satellite</h2>
+<p><img src="img/satellite_exp-1.png" width="2100" style="display: block; margin: auto;" /></p>
+<p><img src="img/satellite_int-1.png" width="2100" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="visualize-results-for-mountaintop-use" class="section level1">
+<h1>Visualize results for mountaintop use</h1>
+<div id="have-keys" class="section level2">
+<h2>Have keys</h2>
+<p><img src="img/have_keys-1.png" width="2100" style="display: block; margin: auto;" /></p>
+</div>
+<div id="last-visit" class="section level2">
+<h2>Last visit</h2>
+<p><img src="img/last_station_visit-1.png" width="2100" style="display: block; margin: auto;" /></p>
+<p>Parsing <code>participated_in</code> and <code>would_participate_in</code> is going to take some work.</p>
+</div>
 </div>
 <div id="interpret" class="section level1">
 <h1>Interpret</h1>
@@ -398,27 +409,33 @@ div.tocify {
 <td align="center">12%</td>
 </tr>
 <tr class="odd">
+<td>Satellite</td>
+<td align="center">32%</td>
+<td align="center">5%</td>
+</tr>
+<tr class="even">
 <td>Contesting</td>
 <td align="center">28%</td>
 <td align="center">28%</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Packet</td>
 <td align="center">26%</td>
 <td align="center">15%</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>ATV</td>
 <td align="center">23%</td>
 <td align="center">6%</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>AREDN</td>
 <td align="center">20%</td>
 <td align="center">0%</td>
 </tr>
 </tbody>
 </table>
+<p>More than half of respondents have keys and have visited in the last two years.</p>
 </div>
 
 
