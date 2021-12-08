@@ -614,9 +614,100 @@ last_visit_df <- data.frame(last_visit_df)
 plot(likert::likert(last_visit_df[, 1, drop = FALSE]), legend.position = "right")
 ```
 
-Parsing `participated_in` and `would_participate_in` is going to take some work.
+## Participated in
 
-# Interpret
+```{r}
+participated_in_df <- narc_fall_2021_mtn %>%
+  dplyr::select(., participated_in) %>%
+  dplyr::mutate(
+    .,
+    maintenance = stringr::str_detect(participated_in, "Station maintenance \\(e.g., work day\\)"),
+    operating = stringr::str_detect(
+      participated_in,
+      "Operating the equipment|Using new radios|ARES"
+    ),
+    social = stringr::str_detect(participated_in, "Get together|Open House"),
+    learning = stringr::str_detect(participated_in, "Learning")
+  ) %>%
+  dplyr::mutate(
+    .,
+    maintenance = factor(
+      maintenance,
+      levels = c(FALSE, TRUE),
+      labels = c("No", "Yes")
+    ),
+    operating = factor(
+      operating,
+      levels = c(FALSE, TRUE),
+      labels = c("No", "Yes")
+    ),
+    social = factor(
+      social,
+      levels = c(FALSE, TRUE),
+      labels = c("No", "Yes")
+    ),
+    learning = factor(
+      learning,
+      levels = c(FALSE, TRUE),
+      labels = c("No", "Yes")
+    )
+  )
+
+participated_in_df <- data.frame(participated_in_df)
+```
+
+```{r participated_in}
+plot(likert::likert(participated_in_df[, 2:5, drop = FALSE]), legend.position = "right")
+```
+
+## Would participate in
+
+```{r}
+would_participate_df <- narc_fall_2021_mtn %>%
+  dplyr::select(., would_participate_in) %>%
+  dplyr::mutate(
+    .,
+    maintenance = stringr::str_detect(would_participate_in, "Maintenance"),
+    learning = stringr::str_detect(would_participate_in, "tutorials"),
+    operating = stringr::str_detect(would_participate_in, "event"),
+    building = stringr::str_detect(would_participate_in, "making"),
+    social = stringr::str_detect(would_participate_in, "Social")
+  ) %>%
+  dplyr::mutate(., 
+    maintenance = factor(
+      maintenance,
+      levels = c(FALSE, TRUE),
+      labels = c("No", "Yes")
+    ),
+    operating = factor(
+      operating,
+      levels = c(FALSE, TRUE),
+      labels = c("No", "Yes")
+    ),
+    social = factor(
+      social,
+      levels = c(FALSE, TRUE),
+      labels = c("No", "Yes")
+    ),
+    learning = factor(
+      learning,
+      levels = c(FALSE, TRUE),
+      labels = c("No", "Yes")
+    ),
+    building = factor(
+      building,
+      levels = c(FALSE, TRUE),
+      labels = c("No", "Yes")
+    ))
+
+would_participate_df <- data.frame(would_participate_df)
+```
+
+```{r would_participate_in}
+plot(likert::likert(would_participate_df[, 2:6, drop = FALSE]), legend.position = "right")
+```
+
+# Interpretations
 
 The largest percentage of respondents who have modest to high levels of interest were found for the following activities:
 
@@ -635,3 +726,7 @@ The largest percentage of respondents who have modest to high levels of interest
 | AREDN         | 20\%                             | 0\% |
 
 More than half of respondents have keys and have visited in the last two years.
+
+Operating and maintenance/work days have been the most common reasons for visiting in recent years.
+
+Substantial percentages (> 60%) of respondents would visit for tutorials and learning activities, maintenance, social gatherings, and building opportunities, with smaller numbers interested in operating events and contests.
